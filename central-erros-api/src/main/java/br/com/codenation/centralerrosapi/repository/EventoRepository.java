@@ -9,7 +9,4 @@ import java.util.UUID;
 
 public interface EventoRepository extends JpaRepository<Eventos, UUID> {
 
-    @Override
-    List<Eventos> findAll();
-
 }
