@@ -20,7 +20,7 @@ public class ErroController {
     }
 
     @GetMapping("/erro-api/v1/erros")
-    List<Erro> getEvento(){
+    List<Erro> getErro(){
         return erroService.getAll();
     }
 

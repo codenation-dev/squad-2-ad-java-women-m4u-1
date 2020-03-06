@@ -1,7 +1,5 @@
 package br.com.codenation.centralerrosapi.DTO;
 
-import br.com.codenation.centralerrosapi.entity.Eventos;
-
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
