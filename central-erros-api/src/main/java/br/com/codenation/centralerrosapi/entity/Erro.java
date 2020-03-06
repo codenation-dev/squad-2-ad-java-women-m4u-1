@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Eventos {
+public class Erro {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -43,7 +43,7 @@ public class Eventos {
     @CreatedDate
     private LocalDate dataEvento;
 
-    public Eventos(UUID id, String descricao, String log, char level, String origem, int quantidade, LocalDate dataEvento) {
+    public Erro(UUID id, String descricao, String log, char level, String origem, int quantidade, LocalDate dataEvento) {
         this.id = id;
         this.descricao = descricao;
         this.log = log;
@@ -53,7 +53,7 @@ public class Eventos {
         this.dataEvento = dataEvento;
     }
 
-    public Eventos() {
+    public Erro() {
     }
 
     public UUID getId() {
