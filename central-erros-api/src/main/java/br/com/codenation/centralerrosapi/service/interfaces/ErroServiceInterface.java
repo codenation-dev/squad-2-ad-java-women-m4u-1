@@ -1,4 +1,4 @@
-package br.com.codenation.centralerrosapi.service;
+package br.com.codenation.centralerrosapi.service.interfaces;
 
 import br.com.codenation.centralerrosapi.entity.Erro;
 

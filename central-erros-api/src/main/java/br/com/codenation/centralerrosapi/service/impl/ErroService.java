@@ -1,7 +1,8 @@
-package br.com.codenation.centralerrosapi.service;
+package br.com.codenation.centralerrosapi.service.impl;
 
 import br.com.codenation.centralerrosapi.entity.Erro;
 import br.com.codenation.centralerrosapi.repository.ErroRepository;
+import br.com.codenation.centralerrosapi.service.interfaces.ErroServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
