@@ -2,7 +2,7 @@ package br.com.codenation.centralerrosapi.controller;
 
 import br.com.codenation.centralerrosapi.DTO.LogDTO;
 import br.com.codenation.centralerrosapi.entity.Erro;
-import br.com.codenation.centralerrosapi.service.ErroServiceInterface;
+import br.com.codenation.centralerrosapi.service.interfaces.ErroServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
