@@ -43,7 +43,7 @@ public class Error {
     private int frequency;
 
     @CreatedDate
-    private LocalDate dataEvent;
+    private LocalDate eventDate;
 
     public Error() {
     }
@@ -105,10 +105,10 @@ public class Error {
     }
 
     public LocalDate getDataEvent() {
-        return dataEvent;
+        return eventDate;
     }
 
     public void setDataEvent(LocalDate dataEvent) {
-        this.dataEvent = dataEvent;
+        this.eventDate = eventDate;
     }
 }
