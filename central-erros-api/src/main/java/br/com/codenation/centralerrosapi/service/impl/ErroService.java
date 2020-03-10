@@ -1,6 +1,6 @@
 package br.com.codenation.centralerrosapi.service.impl;
 
-import br.com.codenation.centralerrosapi.entity.Erro;
+import br.com.codenation.centralerrosapi.entity.Error;
 import br.com.codenation.centralerrosapi.repository.ErroRepository;
 import br.com.codenation.centralerrosapi.service.interfaces.ErroServiceInterface;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class ErroService implements ErroServiceInterface {
     }
 
     @Override
-    public List<Erro> getAll() {
+    public List<Error> getAll() {
         return erroRepository.findAll();
     }
 
     @Override
-    public Erro save(Erro erro) {
-        return erroRepository.save(erro);
+    public Error save(Error error) {
+        return erroRepository.save(error);
     }
 
     @Override
-    public Optional<Erro> getById(UUID id) {
+    public Optional<Error> getById(UUID id) {
         return erroRepository.findById(id);
     }
 

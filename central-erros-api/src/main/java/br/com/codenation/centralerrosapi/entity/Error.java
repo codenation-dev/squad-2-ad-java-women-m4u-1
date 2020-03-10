@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Erro {
+public class Error {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -20,12 +20,14 @@ public class Erro {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private UUID id;
+
+    private String environment;
 
     @Size(max = 50)
     @NotNull
-    private String descricao;
+    private String description;
 
     @Size(max = 255)
     @NotNull
@@ -35,25 +37,15 @@ public class Erro {
     private char level;
 
     @Size(max = 50)
-    private String origem;
+    private String origin;
 
     @NotNull
-    private int quantidade;
+    private int frequency;
 
     @CreatedDate
-    private LocalDate dataEvento;
+    private LocalDate dataEvent;
 
-    public Erro(UUID id, String descricao, String log, char level, String origem, int quantidade, LocalDate dataEvento) {
-        this.id = id;
-        this.descricao = descricao;
-        this.log = log;
-        this.level = level;
-        this.origem = origem;
-        this.quantidade = quantidade;
-        this.dataEvento = dataEvento;
-    }
-
-    public Erro() {
+    public Error() {
     }
 
     public UUID getId() {
@@ -64,12 +56,20 @@ public class Erro {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getEnvironment() {
+        return environment;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getLog() {
@@ -88,27 +88,27 @@ public class Erro {
         this.level = level;
     }
 
-    public String getOrigem() {
-        return origem;
+    public String getOrigin() {
+        return origin;
     }
 
-    public void setOrigem(String origem) {
-        this.origem = origem;
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getFrequency() {
+        return frequency;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 
-    public LocalDate getDataEvento() {
-        return dataEvento;
+    public LocalDate getDataEvent() {
+        return dataEvent;
     }
 
-    public void setDataEvento(LocalDate dataEvento) {
-        this.dataEvento = dataEvento;
+    public void setDataEvent(LocalDate dataEvent) {
+        this.dataEvent = dataEvent;
     }
 }
