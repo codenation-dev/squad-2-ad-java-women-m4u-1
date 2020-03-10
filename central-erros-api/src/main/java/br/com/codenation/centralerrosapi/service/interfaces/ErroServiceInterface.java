@@ -14,4 +14,14 @@ public interface ErroServiceInterface {
     
     Optional<Error> getById(UUID id);
 
+    List<Error> getByEnvironment(String environment);
+
+    List<Error> getByEnvironmentOrderByFrequency(String environment);
+
+    List<Error> getByEnvironmentOrderByLevel(String environment);
+
+    List<Error> getByEnvironmentOrderByDescription(String environment);
+
+
+
 }

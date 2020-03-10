@@ -35,4 +35,28 @@ public class ErroController {
                             .orElse(null);
     }
 
+    @GetMapping(value = "/erro-api/v1/erros", params = {"environment", "order"})
+    List<Error> getByEnvironmentOrderBy(@RequestParam String environment,
+                                       @RequestParam String order) {
+
+        if(order.equals("frequency")) {
+            return erroService.getByEnvironmentOrderByFrequency(environment);
+        }
+
+        if(order.equals("level")){
+            return erroService.getByEnvironmentOrderByLevel(environment);
+        }
+
+        if(order.equals("description")){
+            return erroService.getByEnvironmentOrderByDescription(environment);
+        }
+
+        return null;
+    }
+
+    @GetMapping(value = "/erro-api/v1/erros/", params = "environment")
+    List<Error> getByOrigem(@RequestParam String environment){
+        return erroService.getByEnvironment(environment);
+    }
+
 }

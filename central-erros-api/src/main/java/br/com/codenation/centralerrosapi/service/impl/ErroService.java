@@ -12,25 +12,45 @@ import java.util.UUID;
 @Service
 public class ErroService implements ErroServiceInterface {
 
-    private final ErroRepository erroRepository;
+    private final ErroRepository errorRepository;
 
     public ErroService(ErroRepository erroRepository) {
-        this.erroRepository = erroRepository;
+        this.errorRepository = erroRepository;
     }
 
     @Override
     public List<Error> getAll() {
-        return erroRepository.findAll();
+        return errorRepository.findAll();
     }
 
     @Override
     public Error save(Error error) {
-        return erroRepository.save(error);
+        return errorRepository.save(error);
     }
 
     @Override
     public Optional<Error> getById(UUID id) {
-        return erroRepository.findById(id);
+        return errorRepository.findById(id);
+    }
+
+    @Override
+    public List<Error> getByEnvironment(String environment) {
+        return errorRepository.findByEnvironment(environment);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentOrderByFrequency(String environment) {
+        return errorRepository.findByEnvironmentOrderByFrequency(environment);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentOrderByLevel(String environment) {
+        return errorRepository.findByEnvironmentOrderByLevel(environment);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentOrderByDescription(String environment) {
+        return errorRepository.findByEnvironmentOrderByDescription(environment);
     }
 
 }
