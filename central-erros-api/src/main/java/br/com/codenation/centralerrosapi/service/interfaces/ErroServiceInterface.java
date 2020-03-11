@@ -20,8 +20,14 @@ public interface ErroServiceInterface {
 
     List<Error> getByEnvironmentOrderByLevel(String environment);
 
-    List<Error> getByEnvironmentOrderByDescription(String environment);
+    List<Error> getByEnvironmentAndLevel(String environment, char level);
 
+    List<Error> getByEnvironmentAndDescription(String environment, String value);
 
+    List<Error> getByEnvironmentAndFrequency(String environment, int value);
+
+    List<Error> getByEnvironmentAndLevelOrderByFrequency(String environment, char value);
+
+    List<Error> getByEnvironmentAndLevelOrderByLevel(String environment, char value);
 
 }

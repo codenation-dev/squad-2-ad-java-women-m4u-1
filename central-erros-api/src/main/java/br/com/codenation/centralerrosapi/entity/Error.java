@@ -104,11 +104,11 @@ public class Error {
         this.frequency = frequency;
     }
 
-    public LocalDate getDataEvent() {
+    public LocalDate getEventDate() {
         return eventDate;
     }
 
-    public void setDataEvent(LocalDate dataEvent) {
+    public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
     }
 }

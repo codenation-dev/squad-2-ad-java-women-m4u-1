@@ -16,4 +16,15 @@ public interface ErroRepository extends JpaRepository<Error, UUID> {
 
     List<Error> findByEnvironmentOrderByDescription(String environment);
 
+    List<Error> findByEnvironmentAndLevel(String environment, char level);
+
+    List<Error> findByEnvironmentAndDescription(String environment, String value);
+
+    List<Error> findByEnvironmentAndFrequency(String environment, int value);
+
+    List<Error> findByEnvironmentAndLevelOrderByFrequency(String environment, char charAt);
+
+    List<Error> findByEnvironmentAndLevelOrderByLevel(String environment, char value);
+
+    List<Error> findByEnvironmentAndLevelOrderByDescription(String environment, char value);
 }

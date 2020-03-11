@@ -49,8 +49,29 @@ public class ErroService implements ErroServiceInterface {
     }
 
     @Override
-    public List<Error> getByEnvironmentOrderByDescription(String environment) {
-        return errorRepository.findByEnvironmentOrderByDescription(environment);
+    public List<Error> getByEnvironmentAndLevel(String environment, char level) {
+        return errorRepository.findByEnvironmentAndLevel(environment, level);
     }
+
+    @Override
+    public List<Error> getByEnvironmentAndDescription(String environment, String value) {
+        return errorRepository.findByEnvironmentAndDescription(environment, value);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentAndFrequency(String environment, int value) {
+        return errorRepository.findByEnvironmentAndFrequency(environment, value);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentAndLevelOrderByFrequency(String environment, char value) {
+        return errorRepository.findByEnvironmentAndLevelOrderByFrequency(environment, value);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentAndLevelOrderByLevel(String environment, char value) {
+        return errorRepository.findByEnvironmentAndLevelOrderByLevel(environment, value);
+    }
+
 
 }
