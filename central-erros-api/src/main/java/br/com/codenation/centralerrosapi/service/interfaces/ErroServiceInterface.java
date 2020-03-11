@@ -24,10 +24,9 @@ public interface ErroServiceInterface {
 
     List<Error> getByEnvironmentAndDescription(String environment, String value);
 
-    List<Error> getByEnvironmentAndFrequency(String environment, int value);
-
     List<Error> getByEnvironmentAndLevelOrderByFrequency(String environment, char value);
 
     List<Error> getByEnvironmentAndLevelOrderByLevel(String environment, char value);
 
+    List<Error> getByEnvironmentAndOrigin(String environment, String value);
 }

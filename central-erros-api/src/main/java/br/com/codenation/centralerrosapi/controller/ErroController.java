@@ -80,7 +80,7 @@ public class ErroController {
         }
 
         if (filter.equals("origin")) {
-            return erroService.getByEnvironmentAndFrequency(environment, Integer.parseInt(value));
+            return erroService.getByEnvironmentAndOrigin(environment, value);
         }
         return null;
     }
