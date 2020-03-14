@@ -7,7 +7,7 @@ public class LogDTO {
 
     private UUID id;
 
-    @NotNull
+    @NotNull(message = "Log required.")
     private String log;
 
     public String getLog() {

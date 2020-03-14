@@ -1,33 +1,45 @@
 package br.com.codenation.centralerrosapi.controller;
 
+import br.com.codenation.centralerrosapi.DTO.ErrorDTO;
+import br.com.codenation.centralerrosapi.DTO.ErrorResponseDTO;
 import br.com.codenation.centralerrosapi.DTO.LogDTO;
 import br.com.codenation.centralerrosapi.entity.Error;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
 import javassist.expr.Cast;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 public class ErrorController {
 
     private final ErrorServiceInterface errorService;
 
-    public ErrorController(ErrorServiceInterface erroService) {
-        this.errorService = erroService;
+    public ErrorController(ErrorServiceInterface errorService) {
+        this.errorService = errorService;
     }
 
     @GetMapping("/erro-api/v1/erros")
-    List<Error> getErro(){
-        return errorService.getAll();
+    List<ErrorResponseDTO> getErro(){
+        return errorService.getAll().stream()
+                .map(error -> new ErrorResponseDTO(error.getId(),
+                        error.getEnvironment(),
+                        error.getDescription(),
+                        error.getLevel(),
+                        error.getOrigin(),
+                        error.getFrequency(),
+                        error.getEventDate()))
+                .collect(Collectors.toList());
     }
 
-    @PostMapping("/erro-api/v1/erros")
-    Error newError(@RequestBody Error error){
-        return errorService.save(error);
+    @PostMapping("/error-api/v1/errors")
+    Error newError(@RequestBody ErrorDTO errorDTO){
+        return errorService.save(new ModelMapper().map(errorDTO, Error.class));
     }
 
     @GetMapping("/erro-api/v1/erros/{id}")

@@ -1,47 +1,46 @@
-package br.com.codenation.centralerrosapi.entity;
+package br.com.codenation.centralerrosapi.DTO;
 
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-public class Error {
+public class ErrorDTO {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(updatable = false, nullable = false)
     private UUID id;
 
+    @NotNull(message = "Environment required.")
+    @Size(max = 50)
     private String environment;
 
+    @Size(max = 50)
+    @NotNull(message = "Description required.")
     private String description;
 
+    @NotNull(message = "Log required.")
+    @Size(max = 255)
     private String log;
 
+    @NotNull(message = "Level required")
     private char level;
 
+    @Size(max = 50)
+    @NotNull(message = "Origin required.")
     private String origin;
 
+    @NotNull(message = "Frequency required.")
     private int frequency;
 
+    @CreatedDate
+    @NotNull(message = "Event Date required.")
     private LocalDate eventDate;
 
-    public Error() {
+    public ErrorDTO() {
     }
 
-    public Error(UUID id, String environment, String description, String log, char level, String origin, int frequency, LocalDate eventDate) {
+    public ErrorDTO(UUID id, @NotNull(message = "Environment required.") @Size(max = 50) String environment, @Size(max = 50) @NotNull(message = "Description required.") String description, @NotNull(message = "Log required.") @Size(max = 255) String log, @NotNull(message = "Level required") char level, @Size(max = 50) @NotNull(message = "Origin required.") String origin, @NotNull(message = "Frequency required.") int frequency, @NotNull(message = "Event Date required.") LocalDate eventDate) {
         this.id = id;
         this.environment = environment;
         this.description = description;
@@ -76,14 +75,6 @@ public class Error {
         this.description = description;
     }
 
-    public String getLog() {
-        return log;
-    }
-
-    public void setLog(String log) {
-        this.log = log;
-    }
-
     public char getLevel() {
         return level;
     }
@@ -114,5 +105,13 @@ public class Error {
 
     public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
     }
 }
