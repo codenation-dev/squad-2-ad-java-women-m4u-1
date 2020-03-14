@@ -29,4 +29,12 @@ public interface ErrorServiceInterface {
     List<Error> getByEnvironmentAndLevelOrderByLevel(String environment, char value);
 
     List<Error> getByEnvironmentAndOrigin(String environment, String value);
+
+    List<Error> getByEnvironmentAndDescriptionOrderByFrequency(String environment, String charAt);
+
+    List<Error> getByEnvironmentAndDescriptionOrderByLevel(String environment, String charAt);
+
+    List<Error> getByEnvironmentAndOriginOrderByFrequency(String environment, String charAt);
+
+    List<Error> getByEnvironmentAndOriginOrderByLevel(String environment, String charAt);
 }

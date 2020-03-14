@@ -73,5 +73,25 @@ public class ErrorService implements ErrorServiceInterface {
         return errorRepository.findByEnvironmentAndOrigin(environment, value);
     }
 
+    @Override
+    public List<Error> getByEnvironmentAndDescriptionOrderByFrequency(String environment, String value) {
+        return errorRepository.findByEnvironmentAndDescriptionOrderByFrequency(environment, value);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentAndDescriptionOrderByLevel(String environment, String value) {
+        return errorRepository.findByEnvironmentAndDescriptionOrderByLevel(environment, value);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentAndOriginOrderByFrequency(String environment, String value) {
+        return errorRepository.findByEnvironmentAndOriginOrderByFrequency(environment, value);
+    }
+
+    @Override
+    public List<Error> getByEnvironmentAndOriginOrderByLevel(String environment, String value) {
+        return errorRepository.findByEnvironmentAndOriginOrderByLevel(environment, value);
+    }
+
 
 }

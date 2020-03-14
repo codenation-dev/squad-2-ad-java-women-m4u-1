@@ -72,16 +72,30 @@ public class ErrorController {
                 return errorService.getByEnvironmentAndLevelOrderByLevel(environment, value.charAt(0));
             }
 
-            return null;
         }
 
-        if (filter.equals("description")){
-            return errorService.getByEnvironmentAndDescription(environment, value);
+        if (filter.equals("description")) {
+
+            if (order.isEmpty()) {
+                return errorService.getByEnvironmentAndDescription(environment, value);
+            } else if (order.equals("frequency")) {
+                return errorService.getByEnvironmentAndDescriptionOrderByFrequency(environment, value);
+            } else if (order.equals("level")) {
+                return errorService.getByEnvironmentAndDescriptionOrderByLevel(environment, value);
+            }
         }
 
         if (filter.equals("origin")) {
-            return errorService.getByEnvironmentAndOrigin(environment, value);
+
+            if (order.isEmpty()) {
+                return errorService.getByEnvironmentAndOrigin(environment, value);
+            } else if (order.equals("frequency")) {
+                return errorService.getByEnvironmentAndOriginOrderByFrequency(environment, value);
+            } else if (order.equals("level")) {
+                return errorService.getByEnvironmentAndOriginOrderByLevel(environment, value);
+            }
         }
+
         return null;
     }
 
