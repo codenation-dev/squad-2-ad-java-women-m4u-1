@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.UUID;
 
-public interface ErroRepository extends JpaRepository<Error, UUID> {
+public interface ErrorRepository extends JpaRepository<Error, UUID> {
 
     List<Error> findByEnvironment(String environment);
 

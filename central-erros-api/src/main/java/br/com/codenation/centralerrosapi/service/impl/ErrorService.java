@@ -1,8 +1,8 @@
 package br.com.codenation.centralerrosapi.service.impl;
 
 import br.com.codenation.centralerrosapi.entity.Error;
-import br.com.codenation.centralerrosapi.repository.ErroRepository;
-import br.com.codenation.centralerrosapi.service.interfaces.ErroServiceInterface;
+import br.com.codenation.centralerrosapi.repository.ErrorRepository;
+import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,12 +10,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ErroService implements ErroServiceInterface {
+public class ErrorService implements ErrorServiceInterface {
 
-    private final ErroRepository errorRepository;
+    private final ErrorRepository errorRepository;
 
-    public ErroService(ErroRepository erroRepository) {
-        this.errorRepository = erroRepository;
+    public ErrorService(ErrorRepository errorRepository) {
+        this.errorRepository = errorRepository;
     }
 
     @Override
