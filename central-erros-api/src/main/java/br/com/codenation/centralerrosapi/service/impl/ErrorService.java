@@ -1,6 +1,7 @@
 package br.com.codenation.centralerrosapi.service.impl;
 
 import br.com.codenation.centralerrosapi.entity.Error;
+import br.com.codenation.centralerrosapi.exception.ErrorNotFoundException;
 import br.com.codenation.centralerrosapi.repository.ErrorRepository;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
 import org.springframework.stereotype.Service;
@@ -95,8 +96,11 @@ public class ErrorService implements ErrorServiceInterface {
 
     @Override
     public void deleteById(UUID id) {
-        errorRepository.deleteById(id);
+        Optional<Error> erro = errorRepository.findById(id);
+        if (erro.isPresent()) {
+            errorRepository.deleteById(id);
+        } else {
+            throw new ErrorNotFoundException(id);
+        }
     }
-
-
 }
