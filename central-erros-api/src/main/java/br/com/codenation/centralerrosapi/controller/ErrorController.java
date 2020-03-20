@@ -4,6 +4,7 @@ import br.com.codenation.centralerrosapi.DTO.ErrorDTO;
 import br.com.codenation.centralerrosapi.DTO.ErrorResponseDTO;
 import br.com.codenation.centralerrosapi.DTO.LogDTO;
 import br.com.codenation.centralerrosapi.entity.Error;
+import br.com.codenation.centralerrosapi.exception.ErrorNotFoundException;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
 import javassist.expr.Cast;
 import org.modelmapper.ModelMapper;
@@ -47,7 +48,7 @@ public class ErrorController {
     ResponseEntity<LogDTO> getErroById(@PathVariable UUID id){
         return errorService.getById(id)
                             .map(error -> ResponseEntity.ok().body(new LogDTO(error.getId(), error.getLog())))
-                            .orElse(null);
+                            .orElseThrow(() -> new ErrorNotFoundException(id));
     }
 
     @DeleteMapping("/erro-api/v1/erros/{id}")
