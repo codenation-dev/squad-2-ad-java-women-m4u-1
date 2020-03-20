@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class ErrorController {
     }
 
     @PostMapping("/error-api/v1/errors")
-    Error newError(@RequestBody ErrorDTO errorDTO){
+    Error newError(@Valid @RequestBody ErrorDTO errorDTO){
         return errorService.save(new ModelMapper().map(errorDTO, Error.class));
     }
 
@@ -47,6 +48,11 @@ public class ErrorController {
         return errorService.getById(id)
                             .map(error -> ResponseEntity.ok().body(new LogDTO(error.getId(), error.getLog())))
                             .orElse(null);
+    }
+
+    @DeleteMapping("/erro-api/v1/erros/{id}")
+    void deleteById(@PathVariable UUID id){
+        errorService.deleteById(id);
     }
 
     @GetMapping(value = "/erro-api/v1/erros/environment/{environment}")

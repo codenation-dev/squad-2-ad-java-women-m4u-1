@@ -37,4 +37,6 @@ public interface ErrorServiceInterface {
     List<Error> getByEnvironmentAndOriginOrderByFrequency(String environment, String charAt);
 
     List<Error> getByEnvironmentAndOriginOrderByLevel(String environment, String charAt);
+
+    void deleteById(UUID id);
 }

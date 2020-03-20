@@ -93,5 +93,10 @@ public class ErrorService implements ErrorServiceInterface {
         return errorRepository.findByEnvironmentAndOriginOrderByLevel(environment, value);
     }
 
+    @Override
+    public void deleteById(UUID id) {
+        errorRepository.deleteById(id);
+    }
+
 
 }
