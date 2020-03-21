@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @EntityListeners({AuditingEntityListener.class})
 @Entity
@@ -15,5 +13,6 @@ import javax.persistence.Id;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 }
