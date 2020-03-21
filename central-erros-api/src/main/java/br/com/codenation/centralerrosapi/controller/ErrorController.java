@@ -6,6 +6,8 @@ import br.com.codenation.centralerrosapi.DTO.LogDTO;
 import br.com.codenation.centralerrosapi.entity.Error;
 import br.com.codenation.centralerrosapi.exception.ErrorNotFoundException;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javassist.expr.Cast;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,10 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@RequestMapping(value = "/api")
 @RestController
+@Api(value = "API REST Erros")
+@CrossOrigin(origins="*")
 public class ErrorController {
 
     private final ErrorServiceInterface errorService;
@@ -26,7 +31,8 @@ public class ErrorController {
         this.errorService = errorService;
     }
 
-    @GetMapping("/erro-api/v1/erros")
+    @GetMapping("/v1/erros")
+    @ApiOperation(value = "Retorna uma lista com todos os erros")
     List<ErrorResponseDTO> getErro(){
         return errorService.getAll().stream()
                 .map(error -> new ErrorResponseDTO(error.getId(),
@@ -39,29 +45,33 @@ public class ErrorController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/error-api/v1/errors")
+    @PostMapping("/v1/errors")
+    @ApiOperation(value = "Salva um erro")
     Error newError(@Valid @RequestBody ErrorDTO errorDTO){
         return errorService.save(new ModelMapper().map(errorDTO, Error.class));
     }
 
-    @GetMapping("/erro-api/v1/erros/{id}")
+    @GetMapping("/v1/erros/{id}")
+    @ApiOperation(value = "Retorna um erro especifico")
     ResponseEntity<LogDTO> getErroById(@PathVariable UUID id){
         return errorService.getById(id)
                             .map(error -> ResponseEntity.ok().body(new LogDTO(error.getId(), error.getLog())))
                             .orElseThrow(() -> new ErrorNotFoundException(id));
     }
 
-    @DeleteMapping("/erro-api/v1/erros/{id}")
+    @DeleteMapping("/v1/erros/{id}")
+    @ApiOperation(value = "Deleta um erro")
     void deleteById(@PathVariable UUID id){
         errorService.deleteById(id);
     }
 
-    @GetMapping(value = "/erro-api/v1/erros/environment/{environment}")
+    @GetMapping(value = "/v1/erros/environment/{environment}")
+    @ApiOperation(value = "Retorna uma lista por ambiente")
     List<Error> getByEnvironment(@PathVariable String environment){
         return errorService.getByEnvironment(environment);
     }
 
-    @GetMapping(value = "/erro-api/v1/erros/environment/{environment}", params = {"order"})
+    @GetMapping(value = "/v1/erros/environment/{environment}", params = {"order"})
     List<Error> getByEnvironmentOrderBy(@PathVariable String environment,
                                         @RequestParam String order) {
 
@@ -76,7 +86,7 @@ public class ErrorController {
         return null;
     }
 
-    @GetMapping(value = "/erro-api/v1/erros/environment/{environment}/{filter}", params = {"value","order"} )
+    @GetMapping(value = "/v1/erros/environment/{environment}/{filter}", params = {"value","order"} )
     List<Error> getByEnvironmentAndFilter(@PathVariable String environment,
                                           @PathVariable String filter,
                                           @RequestParam String value,
