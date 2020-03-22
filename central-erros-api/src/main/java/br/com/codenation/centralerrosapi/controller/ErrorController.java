@@ -55,14 +55,8 @@ public class ErrorController {
     @ApiOperation(value = "Retorna um erro especifico")
     ResponseEntity<LogDTO> getErroById(@PathVariable UUID id){
         return errorService.getById(id)
-                            .map(error -> ResponseEntity.ok().body(new LogDTO(error.getId(), error.getLog())))
+                            .map(error -> ResponseEntity.ok().body(new ModelMapper().map(error, LogDTO.class)))
                             .orElseThrow(() -> new ErrorNotFoundException(id));
-    }
-
-    @DeleteMapping("/v1/erros/{id}")
-    @ApiOperation(value = "Deleta um erro")
-    void deleteById(@PathVariable UUID id){
-        errorService.deleteById(id);
     }
 
     @GetMapping(value = "/v1/erros/environment/{environment}")

@@ -94,13 +94,4 @@ public class ErrorService implements ErrorServiceInterface {
         return errorRepository.findByEnvironmentAndOriginOrderByLevel(environment, value);
     }
 
-    @Override
-    public void deleteById(UUID id) {
-        Optional<Error> erro = errorRepository.findById(id);
-        if (erro.isPresent()) {
-            errorRepository.deleteById(id);
-        } else {
-            throw new ErrorNotFoundException(id);
-        }
-    }
 }
