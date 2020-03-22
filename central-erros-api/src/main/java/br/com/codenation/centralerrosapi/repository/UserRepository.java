@@ -1,4 +1,8 @@
 package br.com.codenation.centralerrosapi.repository;
 
-public interface  UserRepository {
+import br.com.codenation.centralerrosapi.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface  UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
 }

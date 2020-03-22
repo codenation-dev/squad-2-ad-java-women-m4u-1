@@ -10,9 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
+
 @EntityListeners(AuditingEntityListener.class)
+@Entity(name = "error")
 public class Error {
+
+
 
     @Id
     @GeneratedValue(generator = "UUID")
