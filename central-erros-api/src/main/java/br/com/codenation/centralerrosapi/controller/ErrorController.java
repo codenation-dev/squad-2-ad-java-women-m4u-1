@@ -8,14 +8,12 @@ import br.com.codenation.centralerrosapi.exception.ErrorNotFoundException;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javassist.expr.Cast;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
