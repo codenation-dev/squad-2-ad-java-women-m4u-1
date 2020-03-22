@@ -23,7 +23,6 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Autowired
     public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository)
             throws Exception {
-
         builder.userDetailsService(email -> new UserCustomDTO(userRepository.findByEmail(email)))
                 .passwordEncoder(passwordEncoder());
     }

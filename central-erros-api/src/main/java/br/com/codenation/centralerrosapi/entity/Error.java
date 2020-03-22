@@ -15,8 +15,6 @@ import java.util.UUID;
 @Entity(name = "error")
 public class Error {
 
-
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
