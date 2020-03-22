@@ -8,21 +8,20 @@ import br.com.codenation.centralerrosapi.exception.ErrorNotFoundException;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javassist.expr.Cast;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequestMapping(value = "/api")
 @RestController
-@Api(value = "API REST Erros")
-@CrossOrigin(origins="*")
+@Api(value = "API REST Errors")
+@CrossOrigin(origins = "*")
 public class ErrorController {
 
     private final ErrorServiceInterface errorService;
@@ -31,56 +30,49 @@ public class ErrorController {
         this.errorService = errorService;
     }
 
-    @GetMapping("/v1/erros")
+    @GetMapping("/v1/errors")
     @ApiOperation(value = "Retorna uma lista com todos os erros")
-    List<ErrorResponseDTO> getErro(){
-        return errorService.getAll().stream()
-                .map(error -> new ErrorResponseDTO(error.getId(),
-                        error.getEnvironment(),
-                        error.getDescription(),
-                        error.getLevel(),
-                        error.getOrigin(),
-                        error.getFrequency(),
-                        error.getEventDate()))
+    List<ErrorResponseDTO> getErro() {
+
+        return errorService
+                .getAll()
+                .stream()
+                .map(error -> new ModelMapper().map(error, ErrorResponseDTO.class))
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/v1/errors")
     @ApiOperation(value = "Salva um erro")
-    Error newError(@Valid @RequestBody ErrorDTO errorDTO){
+    Error newError(@Valid @RequestBody ErrorDTO errorDTO) {
         return errorService.save(new ModelMapper().map(errorDTO, Error.class));
     }
 
-    @GetMapping("/v1/erros/{id}")
+    @GetMapping("/v1/errors/{id}")
     @ApiOperation(value = "Retorna um erro especifico")
-    ResponseEntity<LogDTO> getErroById(@PathVariable UUID id){
+    ResponseEntity<LogDTO> getErroById(@PathVariable UUID id) {
         return errorService.getById(id)
-                            .map(error -> ResponseEntity.ok().body(new ModelMapper().map(error, LogDTO.class)))
-                            .orElseThrow(() -> new ErrorNotFoundException(id));
+                .map(error -> ResponseEntity.ok().body(new ModelMapper().map(error, LogDTO.class)))
+                .orElseThrow(() -> new ErrorNotFoundException(id));
     }
 
-    @GetMapping(value = "/v1/erros/environment/{environment}")
-    @ApiOperation(value = "Retorna uma lista por ambiente")
-    List<Error> getByEnvironment(@PathVariable String environment){
-        return errorService.getByEnvironment(environment);
-    }
-
-    @GetMapping(value = "/v1/erros/environment/{environment}", params = {"order"})
+    @GetMapping(value = "/v1/errors/environment/{environment}", params = {"order"})
+    @ApiOperation(value = "Retorna uma lista por ambiente - order by: level ou frequency")
     List<Error> getByEnvironmentOrderBy(@PathVariable String environment,
                                         @RequestParam String order) {
 
-        if(order.equals("frequency")) {
+        if (order.equals("frequency")) {
             return errorService.getByEnvironmentOrderByFrequency(environment);
         }
 
-        if(order.equals("level")){
+        if (order.equals("level")) {
             return errorService.getByEnvironmentOrderByLevel(environment);
         }
 
-        return null;
+        return errorService.getByEnvironment(environment);
     }
 
-    @GetMapping(value = "/v1/erros/environment/{environment}/{filter}", params = {"value","order"} )
+    @GetMapping(value = "/v1/errors/environment/{environment}/{filter}", params = {"value", "order"})
+    @ApiOperation("Retorna uma lista por ambiente e um filtro (origin, level, description) - order by: level ou frequency")
     List<Error> getByEnvironmentAndFilter(@PathVariable String environment,
                                           @PathVariable String filter,
                                           @RequestParam String value,
