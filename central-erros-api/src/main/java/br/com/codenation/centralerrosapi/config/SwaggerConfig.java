@@ -1,13 +1,23 @@
 package br.com.codenation.centralerrosapi.config;
 
+import io.swagger.models.auth.In;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.RequestHandlerSelectors;
+import org.springframework.http.HttpHeaders;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
@@ -22,6 +32,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("br.com.codenation.centralerrosapi"))
                 .paths(regex("/api.*"))
                 .build()
+                .securitySchemes(Arrays.asList(new ApiKey("Token Access", HttpHeaders.AUTHORIZATION, In.HEADER.name())))
+                .securityContexts(Arrays.asList(securityContext()))
                 .apiInfo(apiInfo());
     }
 
@@ -30,5 +42,21 @@ public class SwaggerConfig {
                 title("Central de Erros API REST").
                 description("API REST de log de erros").
                 build();
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.ant("/api/**"))
+                .build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("ADMIN", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(
+                new SecurityReference("Token Access", authorizationScopes));
     }
 }
