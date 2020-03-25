@@ -47,14 +47,8 @@ public class ErrorController {
     @ApiOperation(value = "Retorna um erro especifico")
     ResponseEntity<LogDTO> getErroById(@PathVariable UUID id){
         return errorService.getById(id)
-                            .map(error -> ResponseEntity.ok().body(new LogDTO(error.getId(), error.getLog())))
+                            .map(error -> ResponseEntity.ok().body(new ModelMapper().map(error, LogDTO.class)))
                             .orElseThrow(() -> new ErrorNotFoundException(id));
-    }
-
-    @GetMapping(value = "/v1/errors/environment/{environment}")
-    @ApiOperation(value = "Retorna uma lista por ambiente")
-    List<Error> getByEnvironment(@PathVariable String environment){
-        return errorService.getByEnvironment(environment);
     }
 
     @GetMapping(value = "/v1/errors//environment/{environment}", params = {"order"})
@@ -81,36 +75,37 @@ public class ErrorController {
                                           @RequestParam String order) {
         if (filter.equals("level")) {
 
-            if (order.isEmpty()) {
-                return errorService.getByEnvironmentAndLevel(environment, value.charAt(0));
-            } else if (order.equals("frequency")) {
+         if (order.equals("frequency")) {
                 return errorService.getByEnvironmentAndLevelOrderByFrequency(environment, value.charAt(0));
             } else if (order.equals("level")) {
                 return errorService.getByEnvironmentAndLevelOrderByLevel(environment, value.charAt(0));
+            } else {
+                return errorService.getByEnvironmentAndLevel(environment, value.charAt(0));
             }
 
         }
 
         if (filter.equals("description")) {
 
-            if (order.isEmpty()) {
-                return errorService.getByEnvironmentAndDescription(environment, value);
-            } else if (order.equals("frequency")) {
+            if (order.equals("frequency")) {
                 return errorService.getByEnvironmentAndDescriptionOrderByFrequency(environment, value);
             } else if (order.equals("level")) {
                 return errorService.getByEnvironmentAndDescriptionOrderByLevel(environment, value);
+            } else {
+                return errorService.getByEnvironmentAndDescription(environment, value);
             }
         }
 
         if (filter.equals("origin")) {
 
-            if (order.isEmpty()) {
-                return errorService.getByEnvironmentAndOrigin(environment, value);
-            } else if (order.equals("frequency")) {
+            if (order.equals("frequency")) {
                 return errorService.getByEnvironmentAndOriginOrderByFrequency(environment, value);
             } else if (order.equals("level")) {
                 return errorService.getByEnvironmentAndOriginOrderByLevel(environment, value);
+            } else {
+                return errorService.getByEnvironmentAndOrigin(environment, value);
             }
+
         }
 
         return errorService.getByEnvironment(environment);
