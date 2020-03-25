@@ -38,5 +38,4 @@ public interface ErrorServiceInterface {
 
     List<Error> getByEnvironmentAndOriginOrderByLevel(String environment, String charAt);
 
-    void deleteById(UUID id);
 }

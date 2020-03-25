@@ -1,6 +1,5 @@
 package br.com.codenation.centralerrosapi.DTO;
 
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.CreatedDate;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -4,6 +4,7 @@ import br.com.codenation.centralerrosapi.entity.Error;
 import br.com.codenation.centralerrosapi.exception.ErrorNotFoundException;
 import br.com.codenation.centralerrosapi.repository.ErrorRepository;
 import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +14,8 @@ import java.util.UUID;
 @Service
 public class ErrorService implements ErrorServiceInterface {
 
-    private final ErrorRepository errorRepository;
-
-    public ErrorService(ErrorRepository errorRepository) {
-        this.errorRepository = errorRepository;
-    }
+    @Autowired
+    private ErrorRepository errorRepository;
 
     @Override
     public List<Error> getAll() {
@@ -92,15 +90,5 @@ public class ErrorService implements ErrorServiceInterface {
     @Override
     public List<Error> getByEnvironmentAndOriginOrderByLevel(String environment, String value) {
         return errorRepository.findByEnvironmentAndOriginOrderByLevel(environment, value);
-    }
-
-    @Override
-    public void deleteById(UUID id) {
-        Optional<Error> erro = errorRepository.findById(id);
-        if (erro.isPresent()) {
-            errorRepository.deleteById(id);
-        } else {
-            throw new ErrorNotFoundException(id);
-        }
     }
 }
