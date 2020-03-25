@@ -9,6 +9,7 @@ import br.com.codenation.centralerrosapi.service.interfaces.ErrorServiceInterfac
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,27 +20,20 @@ import java.util.stream.Collectors;
 
 @RequestMapping(value = "/api")
 @RestController
-@Api(value = "API REST Erros")
-@CrossOrigin(origins="*")
+@Api(value = "API REST Errors")
 public class ErrorController {
 
-    private final ErrorServiceInterface errorService;
+    @Autowired
+    private ErrorServiceInterface errorService;
 
-    public ErrorController(ErrorServiceInterface errorService) {
-        this.errorService = errorService;
-    }
-
-    @GetMapping("/v1/erros")
+    @GetMapping("/v1/errors")
     @ApiOperation(value = "Retorna uma lista com todos os erros")
-    List<ErrorResponseDTO> getErro(){
-        return errorService.getAll().stream()
-                .map(error -> new ErrorResponseDTO(error.getId(),
-                        error.getEnvironment(),
-                        error.getDescription(),
-                        error.getLevel(),
-                        error.getOrigin(),
-                        error.getFrequency(),
-                        error.getEventDate()))
+    List<ErrorResponseDTO> getErro() {
+
+        return errorService
+                .getAll()
+                .stream()
+                .map(error -> new ModelMapper().map(error, ErrorResponseDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -49,7 +43,7 @@ public class ErrorController {
         return errorService.save(new ModelMapper().map(errorDTO, Error.class));
     }
 
-    @GetMapping("/v1/erros/{id}")
+    @GetMapping("/v1/errors/{id}")
     @ApiOperation(value = "Retorna um erro especifico")
     ResponseEntity<LogDTO> getErroById(@PathVariable UUID id){
         return errorService.getById(id)
@@ -57,21 +51,16 @@ public class ErrorController {
                             .orElseThrow(() -> new ErrorNotFoundException(id));
     }
 
-    @DeleteMapping("/v1/erros/{id}")
-    @ApiOperation(value = "Deleta um erro")
-    void deleteById(@PathVariable UUID id){
-        errorService.deleteById(id);
-    }
-
-    @GetMapping(value = "/v1/erros/environment/{environment}")
+    @GetMapping(value = "/v1/errors/environment/{environment}")
     @ApiOperation(value = "Retorna uma lista por ambiente")
     List<Error> getByEnvironment(@PathVariable String environment){
         return errorService.getByEnvironment(environment);
     }
 
-    @GetMapping(value = "/v1/erros/environment/{environment}", params = {"order"})
+    @GetMapping(value = "/v1/errors//environment/{environment}", params = {"order"})
+    @ApiOperation(value = "Retorna uma lista por ambiente - order by: level ou frequency")
     List<Error> getByEnvironmentOrderBy(@PathVariable String environment,
-                                        @RequestParam String order) {
+                                        @RequestParam(required = false) String order) {
 
         if(order.equals("frequency")) {
             return errorService.getByEnvironmentOrderByFrequency(environment);
@@ -81,10 +70,11 @@ public class ErrorController {
             return errorService.getByEnvironmentOrderByLevel(environment);
         }
 
-        return null;
+        return errorService.getByEnvironment(environment);
     }
 
-    @GetMapping(value = "/v1/erros/environment/{environment}/{filter}", params = {"value","order"} )
+    @GetMapping(value = "/v1/errors/environment/{environment}/{filter}", params = {"value","order"} )
+    @ApiOperation("Retorna uma lista por ambiente e um filtro (origin, level, description) - order by: level ou frequency")
     List<Error> getByEnvironmentAndFilter(@PathVariable String environment,
                                           @PathVariable String filter,
                                           @RequestParam String value,
@@ -123,7 +113,7 @@ public class ErrorController {
             }
         }
 
-        return null;
+        return errorService.getByEnvironment(environment);
     }
 
 }
